@@ -1,26 +1,72 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import { Head } from '@inertiajs/react';
+import {
+    MenuFoldOutlined,
+    MenuUnfoldOutlined,
+    UploadOutlined,
+    UserOutlined,
+    VideoCameraOutlined,
+} from '@ant-design/icons';
+import { Button, Layout, Menu } from 'antd';
+import { useState } from 'react';
 
+const { Header, Sider, Content } = Layout;
 export default function Dashboard() {
+    const [collapsed, setCollapsed] = useState(false);
     return (
-        <AuthenticatedLayout
-            header={
-                <h2 className="text-xl font-semibold leading-tight text-gray-800">
-                    Dashboard
-                </h2>
-            }
-        >
-            <Head title="Dashboard" />
-
-            <div className="py-12">
-                <div className="mx-auto max-w-7xl sm:px-6 lg:px-8">
-                    <div className="overflow-hidden bg-white shadow-sm sm:rounded-lg">
-                        <div className="p-6 text-gray-900">
-                            You're logged in!
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </AuthenticatedLayout>
+        <Layout>
+            <Sider trigger={null} collapsible collapsed={collapsed}>
+                <div className="demo-logo-vertical" />
+                <Menu
+                    theme="dark"
+                    mode="inline"
+                    defaultSelectedKeys={['1']}
+                    items={[
+                        {
+                            key: '1',
+                            icon: <UserOutlined />,
+                            label: 'nav 1',
+                        },
+                        {
+                            key: '2',
+                            icon: <VideoCameraOutlined />,
+                            label: 'nav 2',
+                        },
+                        {
+                            key: '3',
+                            icon: <UploadOutlined />,
+                            label: 'nav 3',
+                        },
+                    ]}
+                />
+            </Sider>
+            <Layout>
+                <Header>
+                    <Button
+                        type="text"
+                        icon={
+                            collapsed ? (
+                                <MenuUnfoldOutlined />
+                            ) : (
+                                <MenuFoldOutlined />
+                            )
+                        }
+                        onClick={() => setCollapsed(!collapsed)}
+                        style={{
+                            fontSize: '16px',
+                            width: 64,
+                            height: 64,
+                        }}
+                    />
+                </Header>
+                <Content
+                    style={{
+                        margin: '24px 16px',
+                        padding: 24,
+                        minHeight: '150vh',
+                    }}
+                >
+                    Content
+                </Content>
+            </Layout>
+        </Layout>
     );
 }
